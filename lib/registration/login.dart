@@ -1,8 +1,11 @@
 import 'dart:developer';
-import 'dart:nativewrappers/_internal/vm/lib/ffi_allocation_patch.dart';
+
+// import 'dart:nativewrappers/_internal/vm/lib/ffi_allocation_patch.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:learningfirebase/registration/singUpPage.dart';
+import 'package:learningfirebase/screen/home_scren.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -30,6 +33,13 @@ class _LoginPageState extends State<LoginPage> {
       try {
         UserCredential userCredential = await FirebaseAuth.instance
             .signInWithEmailAndPassword(email: email, password: password);
+        if (userCredential.user!.email != null) {
+          Navigator.popUntil(context, (route) => route.isFirst);
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) {
+            return const HomeScreen();
+          }));
+        }
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text("Login Successful"),
@@ -38,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
         log("Login Successful");
       } on FirebaseAuthException catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
-           SnackBar(
+          SnackBar(
             content: Text("Error: ${e.code.toString()}"),
           ),
         );
@@ -117,7 +127,13 @@ class _LoginPageState extends State<LoginPage> {
               width: 3,
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Navigator.popUntil(context, (route) => route.isFirst);
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) {
+                  return const SignUpPage();
+                }));
+              },
               child: const Text(
                 "Sign Up",
                 style: TextStyle(
