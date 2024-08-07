@@ -2,6 +2,7 @@ import 'dart:developer';
 
 // import 'dart:nativewrappers/_internal/vm/lib/ffi_allocation_patch.dart';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:learningfirebase/registration/singUpPage.dart';
@@ -17,6 +18,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  
   @override
   void logInAction() async {
     final email = _emailController.text.trim();
